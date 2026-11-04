@@ -2,7 +2,7 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, serpantinum, ... }:
 
 {
   imports =
@@ -119,6 +119,8 @@
     inputs.zen-browser.packages."${system}".default
     xdg-user-dirs  # <-- INDISPENSABLE pour que Serpantinum trouve le dossier PICTURES
     upower         # <-- INDISPENSABLE pour les modules de batterie du shell
+    serpantinum.packages.${pkgs.stdenv.hostPlatform.system}.default
+    serpantinum.packages.${pkgs.stdenv.hostPlatform.system}.ski
   ];
  # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #   wget
@@ -219,6 +221,7 @@
     dates = "weekly";       # Cherche les mises à jour toutes les nuits à 4h du matin
     allowReboot = false;   # Ne redémarre pas le PC tout seul
   };
+  programs.serpantinum.enable = true;
   # Ajouter automatiquement le dépôt Flathub au démarrage du système
   system.activationScripts.flatpak-flathub = {
   text = ''
