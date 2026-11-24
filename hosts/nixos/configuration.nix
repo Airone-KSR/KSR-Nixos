@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix 
+      ../../modules/gaming.nix
     ];
   boot = {
   # Active l'animation graphique (affiche le logo de ton PC + une roue de chargement par défaut)
@@ -131,9 +132,6 @@
     git
     wget
     curl
-    inputs.zen-browser.packages."${system}".default
-    xdg-user-dirs  
-    upower         
   ];
  # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #   wget
@@ -198,36 +196,16 @@
   
 
   # 2. Activation de GameMode (optimisation CPU en jeu)
-  programs.gamemode.enable = true;
   programs.hyprland = {
   enable = true;
   xwayland.enable = true;
 };
-
-  xdg.portal = { 
-    enable = true;
-    extraPortals = [ ];
-    config.common.default = "*";
-  };
-  services.upower.enable = true; 
   services.flatpak.enable = true;
   services.gvfs.enable = true;
-  
-  # 1. Automatisation du Nettoyage (Garbage Collector)
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";       # Le nettoyage se fera automatiquement toutes les semaines
-    options = "--delete-older-than 12d"; # Supprime les fichiers vieux de plus de 7 jours
-  };
+  programs.ski.enable = true;
   # 2. Optimisation automatique du stockage Nix
   nix.settings.auto-optimise-store = true; # Fusionne les fichiers identiques pour gagner de l'espace
 
-  # 3. Automatisation des Mises à jour du système (Optionnel)
-  system.autoUpgrade = {
-    enable = true;
-    dates = "weekly";       # Cherche les mises à jour toutes les nuits à 4h du matin
-    allowReboot = false;   # Ne redémarre pas le PC tout seul
-  };
   programs.ryoku = {
             enable = true; 
  };

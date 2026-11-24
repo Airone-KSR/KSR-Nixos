@@ -13,28 +13,21 @@
   # On s'assure d'installer TOUTES les dépendances requises pour faire tourner HyDE sous Hyprland
   home.packages = [
     pkgs.google-chrome
-    pkgs.mangohud
     pkgs.jetbrains-mono
     pkgs.acpi        
     pkgs.xarchiver        
     pkgs.unrar            
     pkgs.mpv              
-    pkgs.libreoffice-fresh 
+    pkgs.libreoffice-qt 
     pkgs.superfile        
     pkgs.aria2                   
-    pkgs.faugus-launcher
-    inputs.zen-browser.packages.${pkgs.system}.default
+    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
-
-  xdg.userDirs = {
-    enable = true;
-    createDirectories = true;
-  };
 
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
-      "inode/directory" = [ "org.gnome.Nautilus.desktop" ];
+      "inode/directory" = [ "ski.desktop" ];
       "video/mp4" = [ "mpv.desktop" ];
       "video/x-matroska" = [ "mpv.desktop" ];
       "video/webm" = [ "mpv.desktop" ];
@@ -50,8 +43,8 @@
     enable = true;
     settings = {
       user = {
-        name = lib.mkForce "kaiserone";
-        email = lib.mkForce "jjtchiteya07@gmail.com";
+        name = "kaiserone";
+        email = "jjtchiteya07@gmail.com";
       };
     };
   };

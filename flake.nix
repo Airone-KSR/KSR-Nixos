@@ -8,13 +8,17 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
+    ski = {
+      url = "github:ilyamiro/Ski";
+      flake = false;
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { ryoku, self, nixpkgs, chaotic, zen-browser, home-manager, ... }@inputs: {
+  outputs = { ryoku, ski, self, nixpkgs, chaotic, zen-browser, home-manager, ... }@inputs: {
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
@@ -25,6 +29,7 @@
           ./ryoku.nix
           ./hosts/nixos/hardware-configuration.nix
           ./hosts/nixos/configuration.nix
+          "${ski}/nix/module.nix"
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

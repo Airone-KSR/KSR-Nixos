@@ -164,11 +164,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795366757,
-        "narHash": "sha256-Tp4Kh4R7ID1f2mMCDlb2PiFQ/DZZsnXB2u2juWN+TT4=",
+        "lastModified": 1795534022,
+        "narHash": "sha256-xkRZ+PcPWaAyf9YrEBszYD5w2S6/Ac2tIfsufzd4dEQ=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "3b8140d21fa0a70b1b38c2ed29853dfe686234a6",
+        "rev": "b56bcd042b5e69ad188eca20d9bec1bfbf3dd453",
         "type": "github"
       },
       "original": {
@@ -495,6 +495,7 @@
         "home-manager": "home-manager_2",
         "nixpkgs": "nixpkgs_2",
         "ryoku": "ryoku",
+        "ski": "ski",
         "zen-browser": "zen-browser"
       }
     },
@@ -641,6 +642,22 @@
         "owner": "Ryoku-dev",
         "repo": "ryotunes",
         "rev": "ade86b744651b908f3946b6769853e5084a59ce1",
+        "type": "github"
+      }
+    },
+    "ski": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1795092052,
+        "narHash": "sha256-qzrhOr4RDBebnc+JF4QjRszlHYxA4vLp2o/7RbMZKwQ=",
+        "owner": "ilyamiro",
+        "repo": "Ski",
+        "rev": "d269abcb1ba87ef98467b64c86d07440c9d7a996",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ilyamiro",
+        "repo": "Ski",
         "type": "github"
       }
     },
