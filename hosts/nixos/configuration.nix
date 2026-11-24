@@ -2,13 +2,28 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, pkgs, inputs, serpantinum, ... }:
+{ config, pkgs, inputs, lib, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix 
     ];
+  boot = {
+  # Active l'animation graphique (affiche le logo de ton PC + une roue de chargement par défaut)
+  plymouth.enable = true;
+
+  # Masque les lignes de texte du démarrage (Silent boot)
+  consoleLogLevel = 3;
+  kernelParams = [
+    "quiet"
+    "splash"
+    "boot.shell_on_fail"
+    "udev.log_priority=3"
+    "rd.systemd.show_status=auto"
+  ];
+};
+ boot.plymouth.theme = "solar";
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = false;
@@ -22,7 +37,7 @@
 
   # Use latest kernel.
   # boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelPackages = inputs.nix-cachyos-kernel.legacyPackages.${pkgs.stdenv.hostPlatform.system}.linuxPackages-cachyos-bore;
+  boot.kernelPackages = pkgs.linuxPackages_cachyos;
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -104,7 +119,7 @@
   };
 
   # Install firefox.
-  programs.firefox.enable = true;
+  programs.firefox.enable = false;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -117,10 +132,8 @@
     wget
     curl
     inputs.zen-browser.packages."${system}".default
-    xdg-user-dirs  # <-- INDISPENSABLE pour que Serpantinum trouve le dossier PICTURES
-    upower         # <-- INDISPENSABLE pour les modules de batterie du shell
-    serpantinum.packages.${pkgs.stdenv.hostPlatform.system}.default
-    serpantinum.packages.${pkgs.stdenv.hostPlatform.system}.ski
+    xdg-user-dirs  
+    upower         
   ];
  # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #   wget
@@ -169,11 +182,7 @@
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "26.05"; # Did you read the comment?
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-   nix.settings = {
-    substituters = [ "https://attic.xuyh0120.win/lantian" ];
-    trusted-public-keys = [ "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=" ];
-  };
-    # Activation du Nix Helper (nh)
+  # Activation du Nix Helper (nh)
   programs.nh = {
     enable = true;
     clean.enable = true;
@@ -201,7 +210,6 @@
     config.common.default = "*";
   };
   services.upower.enable = true; 
-  #programs.serpantinum.enable = true;
   services.flatpak.enable = true;
   services.gvfs.enable = true;
   
@@ -211,7 +219,6 @@
     dates = "weekly";       # Le nettoyage se fera automatiquement toutes les semaines
     options = "--delete-older-than 12d"; # Supprime les fichiers vieux de plus de 7 jours
   };
-
   # 2. Optimisation automatique du stockage Nix
   nix.settings.auto-optimise-store = true; # Fusionne les fichiers identiques pour gagner de l'espace
 
@@ -221,12 +228,7 @@
     dates = "weekly";       # Cherche les mises à jour toutes les nuits à 4h du matin
     allowReboot = false;   # Ne redémarre pas le PC tout seul
   };
-  programs.serpantinum.enable = true;
-  # Ajouter automatiquement le dépôt Flathub au démarrage du système
-  system.activationScripts.flatpak-flathub = {
-  text = ''
-    ${pkgs.flatpak}/bin/flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-   '';
+  programs.ryoku = {
+            enable = true; 
  };
-
 }

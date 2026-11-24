@@ -2,27 +2,27 @@
   description = "Configuration NixOS propre - kaiserone";
 
   inputs = {
-    #ryoku = {
-      #url = "github:Ryoku-dev/Ryoku-on-NixOS/main";
-    #};
+    ryoku = {
+      url = "github:Ryoku-dev/Ryoku-on-NixOS/main";
+    };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
-    zen-browser.url = "github:Gurjaka/zen-browser-nix";
-    serpantinum.url = "github:ilyamiro/serpantinum";
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+    zen-browser.url = "github:0xc000022070/zen-browser-flake";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-   };
-  
+  };
 
-  outputs = { self, nixpkgs, nix-cachyos-kernel, serpantinum, zen-browser, home-manager, ... }@inputs: {
+  outputs = { ryoku, self, nixpkgs, chaotic, zen-browser, home-manager, ... }@inputs: {
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit inputs serpantinum; };
+        specialArgs = { inherit inputs; };
         modules = [
-          serpantinum.nixosModules.default
+          ryoku.nixosModules.default
+          chaotic.nixosModules.default
+          ./ryoku.nix
           ./hosts/nixos/hardware-configuration.nix
           ./hosts/nixos/configuration.nix
           home-manager.nixosModules.home-manager
@@ -38,4 +38,3 @@
     };
   };
 }
-

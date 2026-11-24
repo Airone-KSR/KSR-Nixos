@@ -5,7 +5,7 @@
   programs.ryoku = {
 enable = true;
 binaryCache.enable = true;
-defaultCompositor = "hyprland";
+defaultCompositor = "niri";
 browser = "firefox";
 shell = "fish";
 optionalApps = [
